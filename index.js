@@ -14,10 +14,55 @@
     - Give instances of Person a method `.toString()`:
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
+//constructor
+function Person(name, age) {
+  this.name = name; 
+  this.age = age;
+  this.stomach = [];
+  
+  }
 
-function Person() {
 
+//Methods
+//talk
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
 }
+
+//eat
+Person.prototype.eat = function(food) {
+  if(this.stomach.length >= 10){
+    return this.stomach
+  }
+  this.stomach.push(food)
+  return this.stomach 
+}
+
+//poop
+Person.prototype.poop = function(){
+  return this.stomach = [];
+}
+
+//Object using a person prototype
+const Personkeys = new Person('Cliff', '23');
+
+
+//testing it 
+Personkeys.eat('burger')
+Personkeys.eat('pizza')
+Personkeys.eat('burger')
+Personkeys.eat('pizza')
+Personkeys.eat('burger')
+Personkeys.eat('pizza')
+Personkeys.eat('burger')
+Personkeys.eat('pizza')
+Personkeys.eat('burger')
+Personkeys.eat('pizza')
+Personkeys.eat('burger')
+Personkeys.eat('cheese')
+Personkeys.eat('cheese')
+console.log(Personkeys.eat('pizza'))
+
 
 
 /*
@@ -35,11 +80,37 @@ function Person() {
     - STRETCH: A car which runs out of `fuel` while driving can't drive any more distance:
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
-
-function Car() {
+//Constructor
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0; 
 
 }
 
+//Object using a Car prototype
+const Carkeys = new Car('Mustang', 22);
+
+//Methods
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons
+  return
+}
+
+Car.prototype.drive = function(distance){
+  this.odometer = this.odometer + distance
+  this.tank = this.tank - (this.milesPerGallon/distance)
+  return
+}
+
+Car.prototype.drive = function(){
+  if(this.tank === 0){
+    return `I ran out of fuel at ${this.odometer} miles`
+  }
+}
+
+Carkeys.fill(20)
 
 /*
   TASK 3
@@ -48,19 +119,40 @@ function Car() {
     - Besides the methods on Person.prototype, babies also have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-
-function Baby() {
-
+//constructor/inheritance
+function Baby(name, age, favoriteToy) {
+  Person.call(this);
+  this.name = name;
+  this.age = age; 
+  this.favoriteToy = favoriteToy;
 }
+
+
+//Method 
+Baby.prototype = Object.create(Person.prototype)
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`
+}
+
+
+//Object
+const BabyC = new Baby('Clifford', 1, "Water Gun")
+
+
+console.log(BabyC.play())
+
 
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. It can default bind which mean it can bind to anything in the global scope.
+  2. Implicit binding, which means it calls something that is inside an object 
+  3. Explicit Binding, this calls an object that is being used with a function. function.call(object)
+  This would call whatever is in the object to be used in the function 
+  4. Hard Binding is both strong and explicit and there called harding binding. 
+  Ex: Function.prototype.bind()
 */
 
 ///////// END OF CHALLENGE /////////
